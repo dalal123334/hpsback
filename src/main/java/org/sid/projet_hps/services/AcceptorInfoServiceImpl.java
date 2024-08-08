@@ -2,32 +2,37 @@ package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.TransactionInfo;
-import org.sid.projet_hps.repositories.TransactionInfoRepository;
+import org.sid.projet_hps.repositories.AcceptorInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TransactionInfoServiceImpl implements GenericService<TransactionInfo, Long> {
-private TransactionInfoRepository transactionInfoRepository;
+@Service
+public class AcceptorInfoServiceImpl implements AcceptorInfoService {
+
+    @Autowired
+    private AcceptorInfoRepository acceptorInfoRepository;
 
     @Override
-    public List<TransactionInfo> getAll() {
-        return transactionInfoRepository.findAll();
+    public List<AcceptorInfo> getAll() {
+        return acceptorInfoRepository.findAll();
     }
 
     @Override
-    public Optional<TransactionInfo> getById(Long id) {
-        return transactionInfoRepository.findById(id);
+    public Optional<AcceptorInfo> getById(Long id) {
+        return acceptorInfoRepository.findById(id);
     }
 
     @Override
-    public TransactionInfo save(TransactionInfo transactionInfo) {
-        return transactionInfoRepository.save(transactionInfo);
+    public AcceptorInfo save(AcceptorInfo acceptorInfo) {
+        return acceptorInfoRepository.save(acceptorInfo);
     }
 
     @Override
     public void deleteById(Long id) {
-        transactionInfoRepository.deleteById(id);
+        acceptorInfoRepository.deleteById(id);
     }
 
     @Override

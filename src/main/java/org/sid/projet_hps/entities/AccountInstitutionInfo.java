@@ -1,11 +1,15 @@
 package org.sid.projet_hps.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
 
 @Entity
 @Table(name = "account_institution_info")
+@Getter
+@Setter
 public class AccountInstitutionInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

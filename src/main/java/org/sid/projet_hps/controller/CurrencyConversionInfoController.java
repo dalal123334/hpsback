@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/transactions/merchant-info")
-public class TransactionMerchantInfoController {
+public class CurrencyConversionInfoController {
 
     @Autowired
     private GenericService transactionService;

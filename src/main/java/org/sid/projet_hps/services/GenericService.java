@@ -1,35 +1,21 @@
 package org.sid.projet_hps.services;
-import org.hibernate.validator.constraints.time.DurationMin;
-import org.sid.projet_hps.entities.*;
-import org.sid.projet_hps.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.sid.projet_hps.entities.AcceptorInfo;
+import org.sid.projet_hps.entities.TransactionInfo;
 
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class GenericService <T, ID> {
-    List<T> getAll() {
-        return null;
-    }
+public interface GenericService<T, ID> {
+    List<T> getAll();
+    Optional<T> getById(ID id);
+    T save(T entity);
+    void deleteById(ID id);
 
-    Optional<T> getById(ID id) {
-        return null;
-    }
+    void saveTransactionBaseInfo(TransactionInfo baseInfo);
 
-    T save(T entity) {
-        return null;
-    }
+    TransactionInfo getTransactionBaseInfo(Long id);
 
-    void deleteById(ID id) {
+    void saveTransactionMerchantInfo(AcceptorInfo merchantInfo);
 
-    }
-
-
-    public void saveTransactionBaseInfo(@Valid TransactionInfo baseInfo) {
-    }
+    AcceptorInfo getTransactionMerchantInfo(Long id);
 }
