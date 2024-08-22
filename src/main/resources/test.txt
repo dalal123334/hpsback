@@ -1,0 +1,41 @@
+❴
+"primaryAccountNumber": "rere", // Field 2: Primary Account Number (PAN)
+"processingCode":"fegeg"
+"amountTransaction":"334456", // Field 4: Amount, Transaction
+
+"localTransactionDateTime":"2024-12-2T05:15:23", // Field 12: Date and Time, Local Transaction
+
+"expirationDate":"2024-12-2T05:15:23", // Field 14: Date, Expiration
+
+"pointOfServiceDataCode":"hfhfh", // Field 22: Point of Service Data Code
+
+"cardSequenceNumber":"hfhfh", // Field 23: Card Sequence Number
+
+"functionCode":"gfgfg", // Field 24: Function Code
+
+"messageReasonCode":"hfhfhfh", // Field 25: Message Reason Code
+
+"amountsOriginal":"32345", // Field 30: Amounts, Original
+
+"retrievalReferenceNumber":"hdhdhd", // Field 37: Retrieval Reference Number
+
+"approvalCode":"jdjdjd", // Field 38: Approval Code
+
+"serviceCode":"hdhdhdh", // Field 40: Service Code
+
+"acceptorTerminalId":"dhdhdh", // Field 41: Acceptor Terminal ID
+
+"acceptorIdCode":"ddhdhdhdh", // Field 42: Acceptor ID Code
+
+"acceptorNameLocation":"dkdkdkdk", // Field 43: Acceptor Name/Location
+
+"currencyCodeTransaction":"kdkdkdk", // Field 49: Currency Code, Transaction
+
+"iccSystemRelatedData":"jdjdjdj", // Field 55: Integrated Circuit Card (ICC) System Related Data
+
+"transactionLifeCycleId":"hdhdhdh", // Field 63: Transaction Life Cycle ID
+
+"messageNumber":"jdjdjd", // Field 71: Message Number
+
+"transactionDestinationInstitutionIdCode":"jdjdjdjjd"
+❵

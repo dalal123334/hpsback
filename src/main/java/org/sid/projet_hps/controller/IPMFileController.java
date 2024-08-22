@@ -1,6 +1,5 @@
 package org.sid.projet_hps.controller;
 import org.sid.projet_hps.services.IPMFileService;
-import org.sid.projet_hps.services.IPMFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,7 +12,8 @@ import java.io.IOException;
 @RequestMapping("/api/ipm")
 public class IPMFileController {
 
-private IPMFileService ipmFileService;
+    @Autowired
+    private IPMFileService ipmFileService;
 
     @GetMapping("/generate/{transactionId}")
     public ResponseEntity<byte[]> generateIPMFile(@PathVariable Long transactionId) {

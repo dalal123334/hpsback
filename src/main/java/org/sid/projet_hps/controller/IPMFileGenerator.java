@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.File;
 
 public class IPMFileGenerator {
 
@@ -74,6 +75,12 @@ public class IPMFileGenerator {
                 .append(formatField(additionalData.getGcmsProductIdentifier(), 4))
                 .append(formatField(additionalData.getLicensedProductIdentifier(), 4));
         // ... add other additional data fields as needed
+
+        // Ensure the directory exists
+        File file = new File(filePath).getParentFile();
+        if (file != null && !file.exists()) {
+            file.mkdirs();
+        }
 
         // Write to file
         try (FileOutputStream fos = new FileOutputStream(filePath)) {

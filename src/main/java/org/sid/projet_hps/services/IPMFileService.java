@@ -4,6 +4,7 @@ import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.TransactionInfoRepository;
 import org.sid.projet_hps.controller.IPMFileGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
+@Component
 public class IPMFileService {
 
 private TransactionInfoRepository transactionInfoRepository;

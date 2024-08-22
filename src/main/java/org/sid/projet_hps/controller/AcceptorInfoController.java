@@ -1,15 +1,16 @@
 package org.sid.projet_hps.controller;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
+import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.TransactionInfo;
+import org.sid.projet_hps.services.AcceptorInfoService;
 import org.sid.projet_hps.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @Getter
@@ -19,17 +20,18 @@ public class AcceptorInfoController {
 
     @Qualifier("acceptorInfoServiceImpl")
     @Autowired
-    private GenericService transactionService;
+    private AcceptorInfoService transactionService;
 
     @PostMapping
-    public ResponseEntity<?> saveBaseInfo(@RequestBody @Valid TransactionInfo baseInfo) {
-        transactionService.saveTransactionBaseInfo(baseInfo);
+    public ResponseEntity<?> saveBaseInfo(@RequestBody @Valid AcceptorInfo baseInfo) {
+        //transactionService.save(baseInfo);
+        System.out.println(baseInfo);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TransactionInfo> getBaseInfo(@PathVariable Long id) {
-        TransactionInfo baseInfo = transactionService.getTransactionBaseInfo(id);
+    public ResponseEntity<AcceptorInfo> getBaseInfo(@PathVariable Long id) {
+        AcceptorInfo baseInfo = transactionService.getById(id).orElse(null);
         return ResponseEntity.ok(baseInfo);
     }
 }
