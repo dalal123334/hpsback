@@ -2,9 +2,9 @@ package org.sid.projet_hps.controller;
 
 import jakarta.validation.Valid;
 import org.sid.projet_hps.entities.AcceptorInfo;
-import org.sid.projet_hps.services.GenericService;
+import org.sid.projet_hps.entities.CurrencyConversionInfo;
+import org.sid.projet_hps.services.CurrencyConversionInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/transactions/merchant-info")
 public class CurrencyConversionInfoController {
 
-    @Qualifier("acceptorInfoServiceImpl" +
-            "")
     @Autowired
-    private GenericService transactionService;
+    private CurrencyConversionInfoService transactionService;
 
     @PostMapping
-    public ResponseEntity<?> saveMerchantInfo(@RequestBody @Valid AcceptorInfo merchantInfo) {
-        transactionService.saveTransactionMerchantInfo(merchantInfo);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<CurrencyConversionInfo> saveMerchantInfo(@RequestBody @Valid CurrencyConversionInfo currencyConversionInfo) {
+        return ResponseEntity.ok().body(transactionService.save(currencyConversionInfo));
     }
 
     @GetMapping("/{id}")

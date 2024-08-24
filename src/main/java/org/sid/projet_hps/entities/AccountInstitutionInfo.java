@@ -3,6 +3,7 @@ package org.sid.projet_hps.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.antlr.v4.runtime.misc.NotNull;
 
 
@@ -10,6 +11,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Table(name = "account_institution_info")
 @Getter
 @Setter
+@ToString
 public class AccountInstitutionInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
