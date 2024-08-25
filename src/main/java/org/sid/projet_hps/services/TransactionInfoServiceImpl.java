@@ -3,12 +3,17 @@ package org.sid.projet_hps.services;
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.TransactionInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TransactionInfoServiceImpl implements GenericService<TransactionInfo, Long> {
-private TransactionInfoRepository transactionInfoRepository;
+@Service
+public class TransactionInfoServiceImpl implements TransactionInfoService {
+
+    @Autowired
+    private TransactionInfoRepository transactionInfoRepository;
 
     @Override
     public List<TransactionInfo> getAll() {
