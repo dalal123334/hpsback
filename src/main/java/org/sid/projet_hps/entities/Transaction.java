@@ -6,16 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
+
 @Entity
-@Table (name = "transaction")
+@Table(name = "transaction")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Transaction {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_info_id", referencedColumnName = "id")
@@ -40,8 +41,6 @@ private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "additional_data_id", referencedColumnName = "id")
     private AdditionalData additionalData;
-
-
 
 
 }

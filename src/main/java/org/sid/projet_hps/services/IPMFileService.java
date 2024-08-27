@@ -1,13 +1,18 @@
 package org.sid.projet_hps.services;
+
+
 import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.TransactionInfoRepository;
-import org.sid.projet_hps.controller.IPMFileGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,19 +21,20 @@ import java.nio.file.Paths;
 @Component
 public class IPMFileService {
 
-private TransactionInfoRepository transactionInfoRepository;
+    @Autowired
+    private TransactionService transactionService;
 
-    public byte[] generateIPMFile(Long transactionId) throws IOException {
-        TransactionInfo transaction = transactionInfoRepository.findById( transactionId)
-                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+    public InputStreamResource generateIPMFile() throws IOException {
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow(() -> new RuntimeException("Transaction not found"));
 
-        String fileName = "IPM_" + transactionId + ".ipm";
-        String filePath = "temp/" + fileName;
+        String fileName = "IPM_" + transaction.getId() + ".ipm";
+        String filePath = "src/main/resources/temp/" + fileName;
 
         IPMFileGenerator.generateIPMFile(filePath, transaction);
 
         Path path = Paths.get(filePath);
-        byte[] fileContent = Files.readAllBytes(path);
+
+        InputStreamResource fileContent = new InputStreamResource(Files.newInputStream(path));
         Files.delete(path);  // Delete the temporary file
 
         return fileContent;

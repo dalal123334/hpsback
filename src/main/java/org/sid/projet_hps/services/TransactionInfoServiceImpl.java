@@ -1,6 +1,7 @@
 package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.TransactionInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class TransactionInfoServiceImpl implements TransactionInfoService {
     @Autowired
     private TransactionInfoRepository transactionInfoRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public List<TransactionInfo> getAll() {
         return transactionInfoRepository.findAll();
@@ -27,7 +31,11 @@ public class TransactionInfoServiceImpl implements TransactionInfoService {
 
     @Override
     public TransactionInfo save(TransactionInfo transactionInfo) {
-        return transactionInfoRepository.save(transactionInfo);
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow();
+        transactionInfo = transactionInfoRepository.save(transactionInfo);
+        transaction.setTransactionInfo(transactionInfo);
+        transactionService.save(transaction);
+        return transactionInfo;
     }
 
     @Override

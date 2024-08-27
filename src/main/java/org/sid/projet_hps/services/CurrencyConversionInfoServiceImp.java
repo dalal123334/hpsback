@@ -2,6 +2,7 @@ package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.CurrencyConversionInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.CurrencyConversionInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class CurrencyConversionInfoServiceImp implements CurrencyConversionInfoS
     @Autowired
     private CurrencyConversionInfoRepository currencyConversionInfoRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public List<CurrencyConversionInfo> getAll() {
         return currencyConversionInfoRepository.findAll();
@@ -28,7 +32,12 @@ public class CurrencyConversionInfoServiceImp implements CurrencyConversionInfoS
 
     @Override
     public CurrencyConversionInfo save(CurrencyConversionInfo currencyConversionInfo) {
-        return currencyConversionInfoRepository.save(currencyConversionInfo);
+        Transaction transaction = transactionService.getLastTransaction().orElse(null);
+        currencyConversionInfo = currencyConversionInfoRepository.save(currencyConversionInfo);
+        assert transaction != null;
+        transaction.setCurrencyConversionInfo(currencyConversionInfo);
+        transactionService.save(transaction);
+        return currencyConversionInfo;
     }
 
     @Override

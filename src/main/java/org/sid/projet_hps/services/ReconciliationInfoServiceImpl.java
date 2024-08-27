@@ -2,6 +2,7 @@ package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.ReconciliationInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.ReconciliationInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ReconciliationInfoServiceImpl implements ReconciliationInfoService 
     @Autowired
     private ReconciliationInfoRepository reconciliationInfoRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public List<ReconciliationInfo> getAll() {
         return reconciliationInfoRepository.findAll();
@@ -28,7 +32,11 @@ public class ReconciliationInfoServiceImpl implements ReconciliationInfoService 
 
     @Override
     public ReconciliationInfo save(ReconciliationInfo reconciliationInfo) {
-        return reconciliationInfoRepository.save(reconciliationInfo);
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow();
+        reconciliationInfo = reconciliationInfoRepository.save(reconciliationInfo);
+        transaction.setReconciliationInfo(reconciliationInfo);
+        transactionService.save(transaction);
+        return reconciliationInfo;
     }
 
     @Override

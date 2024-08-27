@@ -2,6 +2,7 @@ package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.AdditionalData;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.AdditionalDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class AdditionalDataServiceImpl implements AdditionalDataService {
     @Autowired
     private AdditionalDataRepository additionalDataRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public List<AdditionalData> getAll() {
         return additionalDataRepository.findAll();
@@ -28,7 +32,11 @@ public class AdditionalDataServiceImpl implements AdditionalDataService {
 
     @Override
     public AdditionalData save(AdditionalData additionalData) {
-        return additionalDataRepository.save(additionalData);
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow();
+        additionalData = additionalDataRepository.save(additionalData);
+        transaction.setAdditionalData(additionalData);
+        transactionService.save(transaction);
+        return additionalData;
     }
 
     @Override
