@@ -1,10 +1,7 @@
 package org.sid.projet_hps.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
@@ -13,6 +10,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class AcceptorInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,10 @@
 package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.AcceptorInfoRepository;
+import org.sid.projet_hps.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class AcceptorInfoServiceImpl implements AcceptorInfoService {
 
     @Autowired
     private AcceptorInfoRepository acceptorInfoRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<AcceptorInfo> getAll() {
@@ -27,7 +32,11 @@ public class AcceptorInfoServiceImpl implements AcceptorInfoService {
 
     @Override
     public AcceptorInfo save(AcceptorInfo acceptorInfo) {
-        return acceptorInfoRepository.save(acceptorInfo);
+        Transaction transaction = new Transaction();
+        acceptorInfo = acceptorInfoRepository.save(acceptorInfo);
+        transaction.setAcceptorInfo(acceptorInfo);
+        transactionRepository.save(transaction);
+        return acceptorInfo;
     }
 
     @Override

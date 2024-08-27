@@ -2,6 +2,7 @@ package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
 import org.sid.projet_hps.entities.AccountInstitutionInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.AccountInstitutionInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class AccountInstitutionInfoServiceImpl implements AccountInstitutionInfo
     @Autowired
     private AccountInstitutionInfoRepository accountInstitutionInfoRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public List<AccountInstitutionInfo> getAll() {
         return accountInstitutionInfoRepository.findAll();
@@ -28,7 +32,11 @@ public class AccountInstitutionInfoServiceImpl implements AccountInstitutionInfo
 
     @Override
     public AccountInstitutionInfo save(AccountInstitutionInfo accountInstitutionInfo) {
-        return accountInstitutionInfoRepository.save(accountInstitutionInfo);
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow(() -> new RuntimeException("No transaction found"));
+        accountInstitutionInfo = accountInstitutionInfoRepository.save(accountInstitutionInfo);
+        transaction.setAccountInstitutionInfo(accountInstitutionInfo);
+        transactionService.save(transaction);
+        return accountInstitutionInfo;
     }
 
     @Override

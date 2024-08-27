@@ -1,4 +1,4 @@
-package org.sid.projet_hps.controller;
+package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.*;
 import java.io.FileOutputStream;
@@ -7,14 +7,23 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.File;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 public class IPMFileGenerator {
 
-    public static void generateIPMFile(String filePath, TransactionInfo transaction) throws IOException {
+    private static final Logger logger = Logger.getLogger(IPMFileGenerator.class.getName());
+    private static final String HEADER = "J1644€";
+    private static final String MESSAGE_TYPE_IDENTIFIER = "1240";
+
+    public static void generateIPMFile(String filePath, Transaction transaction) throws IOException {
+        Objects.requireNonNull(filePath, "File path must not be null");
+        Objects.requireNonNull(transaction, "Transaction must not be null");
+
         StringBuilder content = new StringBuilder();
 
-        // Add header (J1644€)
-        content.append("J1644€");
+        // Add header
+        content.append(HEADER);
 
         // Add Transaction Info
         TransactionInfo info = transaction.getTransactionInfo();
@@ -27,8 +36,8 @@ public class IPMFileGenerator {
                 .append(formatField(info.getMessageNumber(), 4))
                 .append(formatField(info.getTransactionLifeCycleId(), 16));
 
-        // Add Message Type Identifier (1240)
-        content.append("1240");
+        // Add Message Type Identifier
+        content.append(MESSAGE_TYPE_IDENTIFIER);
 
         // Add other fields from TransactionInfo
         content.append(formatField(info.getPrimaryAccountNumber(), 19))
@@ -85,6 +94,10 @@ public class IPMFileGenerator {
         // Write to file
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(content.toString().getBytes(StandardCharsets.UTF_8));
+            logger.info("File generated successfully at " + filePath);
+        } catch (IOException e) {
+            logger.severe("Error writing to file: " + e.getMessage());
+            throw e;
         }
     }
 

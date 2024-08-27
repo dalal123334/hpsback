@@ -1,14 +1,23 @@
 package org.sid.projet_hps.services;
 
 import org.sid.projet_hps.entities.AcceptorInfo;
+import org.sid.projet_hps.entities.Transaction;
 import org.sid.projet_hps.entities.TransactionInfo;
 import org.sid.projet_hps.repositories.TransactionInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TransactionInfoServiceImpl implements GenericService<TransactionInfo, Long> {
-private TransactionInfoRepository transactionInfoRepository;
+@Service
+public class TransactionInfoServiceImpl implements TransactionInfoService {
+
+    @Autowired
+    private TransactionInfoRepository transactionInfoRepository;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Override
     public List<TransactionInfo> getAll() {
@@ -22,7 +31,11 @@ private TransactionInfoRepository transactionInfoRepository;
 
     @Override
     public TransactionInfo save(TransactionInfo transactionInfo) {
-        return transactionInfoRepository.save(transactionInfo);
+        Transaction transaction = transactionService.getLastTransaction().orElseThrow();
+        transactionInfo = transactionInfoRepository.save(transactionInfo);
+        transaction.setTransactionInfo(transactionInfo);
+        transactionService.save(transaction);
+        return transactionInfo;
     }
 
     @Override

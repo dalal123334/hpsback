@@ -24,9 +24,8 @@ public class AcceptorInfoController {
 
     @PostMapping
     public ResponseEntity<?> saveBaseInfo(@RequestBody @Valid AcceptorInfo baseInfo) {
-        //transactionService.save(baseInfo);
-        System.out.println(baseInfo);
-        return ResponseEntity.ok().build();
+//        System.out.println("baseInfo = " + baseInfo);
+        return ResponseEntity.ok().body(transactionService.save(baseInfo));
     }
 
     @GetMapping("/{id}")
